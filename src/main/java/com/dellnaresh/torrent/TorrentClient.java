@@ -2,6 +2,7 @@ package com.dellnaresh.torrent;
 
 import com.turn.ttorrent.client.Client;
 import com.turn.ttorrent.client.SharedTorrent;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.util.Observer;
 /**
  * Created by nareshm on 5/13/2016.
  */
+@Component
 public class TorrentClient {
     public void downloadFile() throws IOException, NoSuchAlgorithmException {
         // First, instantiate the Client object.

@@ -30,13 +30,45 @@ public class TeluguMovies implements Movies {
     public String URL ;
     @Value("${app.movie.download.directory}")
     public String downloadDirectory ;
+    private static int count;
+    private static boolean start=true;
+    private int num=1;
     @Autowired
     private MovieRepository movieRepository;
 
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
+    }
+
     @Override
     public void getTeluguTorrents() throws IOException {
-        Document doc = Jsoup.connect(URL).get();
+        while (start||count>0) {
+            logger.debug("value of start {} and count {}",start,count);
+            downloadUsingUrl(URL);
+            updateUrl();
+            start=false;
+        }
+    }
+
+    private void updateUrl() {
+        String replace =null;
+        if(start) {
+            replace=org.apache.commons.lang3.StringUtils.replace(URL, "?", ++num + "/?");
+        }else {
+            replace=org.apache.commons.lang3.StringUtils.replace(URL, num+"/?", ++num + "/?");
+        }
+        logger.debug("New url {}",replace);
+        this.setURL(replace);
+    }
+
+    private void downloadUsingUrl(String u) throws IOException {
+        Document doc = Jsoup.connect(u).get();
         Elements torrents = doc.select("a[title$=Download torrent file]");
+        count=torrents.size();
         torrents.parallelStream().forEach(torrent -> {
             String href = torrent.attr("href");
             String name = org.apache.commons.lang3.StringUtils.substringAfter(href,"title=[kat.cr]");

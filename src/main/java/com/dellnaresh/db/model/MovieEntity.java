@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by nareshm on 5/14/2016.
  */
 @Entity
-@Table(name = "movie")
+@Table(name = "MovieEntity")
 public class MovieEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
