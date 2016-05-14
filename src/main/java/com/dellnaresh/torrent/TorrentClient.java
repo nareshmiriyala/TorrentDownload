@@ -30,8 +30,8 @@ public class TorrentClient {
 // You can optionally set download/upload rate limits
 // in kB/second. Setting a limit to 0.0 disables rate
 // limits.
-        client.setMaxDownloadRate(50.0);
-        client.setMaxUploadRate(50.0);
+//        client.setMaxDownloadRate(50.0);
+//        client.setMaxUploadRate(50.0);
         client.addObserver(new Observer() {
             public void update(Observable observable, Object data) {
                 Client client = (Client) observable;
